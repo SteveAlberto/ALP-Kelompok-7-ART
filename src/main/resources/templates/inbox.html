@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Kotak Masuk</title></head>
+<body>
+    <h1>Kotak Masuk (Inbox)</h1>
+    <a href="/katalog">Kembali ke Katalog</a>
+    <hr>
+
+    <div th:if="${#lists.isEmpty(pesanMasuk)}">
+        <p>Belum ada pesan masuk.</p>
+    </div>
+
+    <div th:each="pesan : ${pesanMasuk}" style="border: 1px solid blue; padding: 10px; margin-bottom: 10px;">
+        <p><strong>Dari:</strong> <span th:text="${pesan.sender.username}">Pengirim</span></p>
+        <p><strong>Waktu:</strong> <span th:text="${#temporals.format(pesan.sentAt, 'dd-MM-yyyy HH:mm')}">Waktu</span></p>
+        <p><strong>Pesan:</strong> <span th:text="${pesan.messageContent}">Isi pesan...</span></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Detail Karya</title></head>
+<body>
+    <h1>Detail Karya Seni</h1>
+    <a href="/katalog">Kembali ke Katalog</a>
+    <hr>
+
+    <h2 th:text="${detailKarya.title}">Judul Karya</h2>
+    <p><strong>Seniman:</strong> <span th:text="${detailKarya.artist.username}">Nama Seniman</span></p>
+    <p><strong>Kategori:</strong> <span th:text="${detailKarya.category}">Kategori</span></p>
+    <p><strong>Harga:</strong> Rp<span th:text="${detailKarya.finalPrice}">0</span></p>
+
+    <a th:href="@{/edit/{id}(id=${detailKarya.id})}" style="background-color: yellow; padding: 5px;">Edit Karya</a>
+    <a th:href="@{/hapus/{id}(id=${detailKarya.id})}" style="background-color: red; color: white; padding: 5px;" onclick="return confirm('Yakin ingin menghapus karya ini?');">Hapus Karya</a>
+
+    <hr>
+    <h3>Kirim Pesan ke Seniman</h3>
+    <form th:action="@{/kirim-pesan}" method="post">
+        <input type="hidden" name="receiverId" th:value="${detailKarya.artist.id}" />
+        
+        <label>Pesan Anda:</label><br>
+        <textarea name="messageContent" rows="4" cols="50" required placeholder="Tulis pesan di sini..."></textarea><br><br>
+        
+        <button type="submit">Kirim Pesan</button>
+    </form>
+</body>
+</html>

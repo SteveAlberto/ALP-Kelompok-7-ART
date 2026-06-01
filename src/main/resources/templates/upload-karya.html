@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Karya Baru</title>
+</head>
+<body>
+    <h1>Upload Karya Seni Baru</h1>
+    
+    <form th:action="@{/upload}" th:object="${karyaBaru}" method="post">
+        
+        <label>Judul Karya:</label>
+        <input type="text" th:field="*{title}" required /><br><br>
+        
+        <label>Kategori:</label>
+        <input type="text" th:field="*{category}" /><br><br>
+        
+        <h3>Kalkulator Harga:</h3>
+        
+        <label>Biaya Produksi (Rp):</label>
+        <input type="number" th:field="*{productionCost}" required /><br><br>
+        
+        <label>Waktu Pengerjaan (Jam):</label>
+        <input type="number" th:field="*{workHours}" required /><br><br>
+        
+        <label>Tingkat Kesulitan:</label>
+        <select th:field="*{difficulty}">
+            <option value="Mudah">Mudah</option>
+            <option value="Sedang">Sedang</option>
+            <option value="Sulit">Sulit</option>
+        </select><br><br>
+        
+        <button type="submit">Submit dan Hitung Harga</button>
+    </form>
+</body>
+</html>

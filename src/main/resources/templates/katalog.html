@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Katalog Seni</title>
+</head>
+<body>
+    <h1>Katalog Karya Seni</h1>
+    <a href="/upload">Upload Karya Baru</a>
+    <hr>
+    
+    <div th:each="karya : ${daftarKarya}" style="border: 1px solid black; padding: 10px; margin-bottom: 10px;">
+        <h2 th:text="${karya.title}">Judul Karya</h2>
+        <p>Kategori: <span th:text="${karya.category}">Kategori</span></p>
+        <p>Harga: Rp<span th:text="${karya.finalPrice}">0</span></p>
+        
+        <a th:href="@{/karya/{id}(id=${karya.id})}">Lihat Detail</a>
+    </div>
+</body>
+</html>
