@@ -17,11 +17,6 @@ public class MarketplaceController {
     @Autowired
     private ArtworkService artworkService;
 
-    @GetMapping("/")
-    public String landingPage() {
-        return "index";
-    }
-
     @GetMapping("/katalog")
     public String showCatalog(Model model) {
         List<Artwork> artworks = artworkService.getAllCatalog();

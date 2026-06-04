@@ -92,11 +92,11 @@
       </div>
       <div class="col-lg-6">
         <div class="hero-art-grid">
-          <div class="art-thumb art-grad-1"></div>
-          <div class="art-thumb art-grad-3"></div>
-          <div class="art-thumb art-grad-5"></div>
-          <div class="art-thumb art-grad-7"></div>
-          <div class="art-thumb art-grad-2"></div>
+          <div class="art-thumb" style="background-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500&q=80'); background-size: cover; background-position: center;"></div>
+          <div class="art-thumb" style="background-image: url('https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=500&q=80'); background-size: cover; background-position: center;"></div>
+          <div class="art-thumb" style="background-image: url('https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?w=500&q=80'); background-size: cover; background-position: center;"></div>
+          <div class="art-thumb" style="background-image: url('https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=500&q=80'); background-size: cover; background-position: center;"></div>
+          <div class="art-thumb" style="background-image: url('https://images.unsplash.com/photo-1573521193826-58c7dc2e13e3?w=500&q=80'); background-size: cover; background-position: center;"></div>
         </div>
       </div>
     </div>
@@ -122,11 +122,13 @@
       <div class="col-md-4 col-6" th:each="art : ${artworks}">
         <div class="artwork-card card" th:onclick="'window.location=\'/karya/' + ${art.id} + '\''">
           <div class="art-img-wrap">
-            <div class="art-grad-1" style="width:100%;height:100%"></div>
+            <div style="width: 100%; height: 100%; background-size: cover; background-position: center;"
+                th:styleappend="'background-image: url(' + (${art.imageUrl != null and !art.imageUrl.isEmpty()} ? ${art.imageUrl} : 'https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80') + ');'">
+            </div>
             
             <div class="art-badge" 
-                 th:style="${art.status == 'AVAILABLE'} ? 'background:var(--success)' : 'background:var(--text-muted)'"
-                 th:text="${art.status == 'AVAILABLE'} ? 'Tersedia' : 'Terjual'">
+                th:style="${art.status == 'AVAILABLE'} ? 'background:var(--success)' : 'background:var(--text-muted)'"
+                th:text="${art.status == 'AVAILABLE'} ? 'Tersedia' : 'Terjual'">
               Tersedia
             </div>
             
