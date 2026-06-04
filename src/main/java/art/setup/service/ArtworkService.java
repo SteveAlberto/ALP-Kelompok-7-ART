@@ -53,6 +53,10 @@ public class ArtworkService {
         return artworkRepository.findById(id).orElse(null);
     }
 
+    public List<Artwork> getArtworksByArtistId(Long artistId) {
+        return artworkRepository.findByArtist_Id(artistId);
+    }
+
     public Artwork updateArtwork(Long id, Artwork updatedArtwork) {
         Artwork existingArtwork = artworkRepository.findById(id).orElse(null);
         
@@ -77,5 +81,9 @@ public class ArtworkService {
 
     public void deleteArtwork(Long id) {
         artworkRepository.deleteById(id);
+    }
+
+    public void save(Artwork artwork) {
+        artworkRepository.save(artwork);
     }
 }

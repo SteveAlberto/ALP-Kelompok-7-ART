@@ -1,13 +1,16 @@
 package art.setup.controller;
 
-import art.setup.model.ArtistHistory;
+import art.setup.model.Artwork;
 import art.setup.model.User;
+import art.setup.service.ArtworkService;
 import art.setup.service.ArtistHistoryService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam; 
 
 import java.util.List;
 
@@ -15,27 +18,31 @@ import java.util.List;
 public class ProfileController {
 
     @Autowired
-    private ArtistHistoryService artistHistoryService;
-    @GetMapping("/profil")
-    public String showProfile(HttpSession session, Model model) {
-        User currentUser = (User) session.getAttribute("loggedInUser");
-        if (currentUser == null) {
+    private ArtworkService artworkService;
+
+    @Autowired
+    private ArtistHistoryService artistHistoryService; 
+
+    @GetMapping("/dashboard")
+    public String showDashboard(HttpSession session, Model model) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
             return "redirect:/login"; 
         }
 
-        List<ArtistHistory> riwayatList = artistHistoryService.getHistoryByArtist(currentUser.getId());
-        
-        model.addAttribute("user", currentUser);
-        model.addAttribute("daftarRiwayat", riwayatList);
+        List<Artwork> myArtworks = artworkService.getArtworksByArtistId(loggedInUser.getId());
+        int activeListings = myArtworks.size();
 
-        return "profil"; 
+        model.addAttribute("myArtworks", myArtworks);
+        model.addAttribute("activeListings", activeListings);
+
+        return "dashboard";
     }
 
     @PostMapping("/profil/tambah-riwayat")
-    public String addProfileHistory(@RequestParam String year, 
-                                    @RequestParam String description, 
+    public String addProfileHistory(@RequestParam String year,
+                                    @RequestParam String description,
                                     HttpSession session) {
-                                        
         User currentUser = (User) session.getAttribute("loggedInUser");
         if (currentUser == null) {
             return "redirect:/login";

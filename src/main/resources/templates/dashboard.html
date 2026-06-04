@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,253 +8,117 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Instrument+Sans:wght@300;400;500;600" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 <nav class="navbar">
-  <a class="navbar-brand" href="index.html">Artopia<span class="brand-dot"></span></a>
+  <a class="navbar-brand" th:href="@{/}">Artopia<span class="brand-dot"></span></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="catalog.html">Katalog</a></li>
-    <li><a href="dashboard.html" class="active">Dashboard</a></li>
-    <li><a href="inbox.html">Inbox</a></li>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/katalog}">Katalog</a></li>
+    <li><a th:href="@{/dashboard}" class="active">Dashboard</a></li>
+    <li><a th:href="@{/inbox}">Inbox</a></li>
   </ul>
   <div class="navbar-search">
     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input type="text" placeholder="Cari karya, seniman...">
   </div>
-  <div class="navbar-actions">
-    <a href="inbox.html" class="btn btn-ghost btn-sm">
+  <div class="navbar-actions" th:if="${session.loggedInUser != null}">
+    <a th:href="@{/inbox}" class="btn btn-ghost btn-sm">
       <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
     </a>
-    <div class="artist-avatar" style="background:var(--accent);color:white;font-weight:700;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;">A</div>
-    <button class="btn btn-outline btn-sm" onclick="window.location='index.html'">Keluar</button>
-  </div>
-  <div class="navbar-actions">
-    <button class="btn btn-ghost btn-sm">Masuk</button>
-    <button class="btn btn-primary btn-sm">Daftar</button>
+    <div class="artist-avatar" style="background:var(--accent);color:white;font-weight:700;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;" th:text="${#strings.substring(session.loggedInUser.username,0,1)}">A</div>
+    <button class="btn btn-outline btn-sm" onclick="window.location='/logout'">Keluar</button>
   </div>
 </nav>
 
-<!-- Toast container -->
 <div id="toast-container" class="toast-container"></div>
 
 <div class="dashboard-layout">
-  <!-- Sidebar -->
   <aside class="dashboard-sidebar">
     <div style="padding:0 0.5rem;margin-bottom:1.5rem">
       <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:0.25rem">Workspace</div>
     </div>
     <ul class="dash-nav">
-      <li>
-        <a href="dashboard.html" class="active">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          Overview
-        </a>
-      </li>
-      <li>
-        <a href="catalog.html">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Karya Saya
-        </a>
-      </li>
-      <li>
-        <a href="upload.html">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Upload Karya
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          Transaksi
-        </a>
-      </li>
-      <li>
-        <a href="inbox.html">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Inbox
-        </a>
-      </li>
+      <li><a th:href="@{/dashboard}" class="active"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</a></li>
+      <li><a th:href="@{/katalog}"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Katalog</a></li>
+      <li><a th:href="@{/upload}"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Upload Karya</a></li>
+      <li><a th:href="@{/inbox}"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Inbox</a></li>
     </ul>
   </aside>
 
-  <!-- Main -->
   <div class="dashboard-main">
     <div class="flex-between mb-4">
       <div>
-        <h2 style="font-size:1.5rem">Artist Dashboard</h2>
-        <p class="text-muted text-sm">Manage your portfolio, track sales, and connect with collectors.</p>
+        <h2 style="font-size:1.5rem" th:text="'Halo, ' + ${session.loggedInUser.username} + '!'">Artist Dashboard</h2>
+        <p class="text-muted text-sm">Kelola portofolio dan pantau karyamu di sini.</p>
       </div>
-      <a href="upload.html" class="btn btn-primary" style="display:flex;align-items:center;gap:0.4rem">
+      <a th:href="@{/upload}" class="btn btn-primary" style="display:flex;align-items:center;gap:0.4rem">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Upload Karya Baru
       </a>
     </div>
 
-    <!-- Stats -->
     <div class="row g-3 mb-4">
-      <div class="col-md-3 col-6">
+      <div class="col-md-4">
         <div class="stat-card">
-          <div class="stat-label">Total Sales</div>
-          <div class="stat-value" style="color:var(--accent)">Rp 45.2M</div>
-          <div class="stat-delta delta-up">↑ 12% from last month</div>
-        </div>
-      </div>
-      <div class="col-md-3 col-6">
-        <div class="stat-card">
-          <div class="stat-label">Profile Views</div>
-          <div class="stat-value">12,840</div>
-          <div class="stat-delta delta-up">⊕ 84 new today</div>
-        </div>
-      </div>
-      <div class="col-md-3 col-6">
-        <div class="stat-card">
-          <div class="stat-label">Active Listings</div>
-          <div class="stat-value">24</div>
-          <div class="stat-delta" style="color:var(--text-muted)">3 pending review</div>
-        </div>
-      </div>
-      <div class="col-md-3 col-6">
-        <div class="stat-card">
-          <div class="stat-label">Avg. Rating</div>
-          <div class="stat-value">4.9</div>
-          <div class="stat-delta" style="color:var(--gold)">★★★★★</div>
+          <div class="stat-label">Total Karya Diunggah</div>
+          <div class="stat-value" th:text="${activeListings}">0</div>
         </div>
       </div>
     </div>
 
-    <!-- Works table -->
     <div class="panel">
       <div class="flex-between mb-3">
         <h4 style="font-size:1rem">Karya Saya</h4>
-        <div class="flex gap-2 items-center">
-          <input type="text" placeholder="Cari karya..." style="padding:0.35rem 0.75rem;border:1.5px solid var(--border);border-radius:var(--radius);font-size:0.8rem;outline:none;background:var(--surface)">
-          <button class="btn btn-outline btn-sm">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-            Filter
-          </button>
-        </div>
       </div>
       <div style="overflow-x:auto">
         <table class="dashboard-table">
           <thead>
             <tr>
               <th>Karya</th>
-              <th>Medium</th>
-              <th>Dimensi</th>
+              <th>Kategori</th>
+              <th>Jam Kerja</th>
               <th>Harga</th>
               <th>Status</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr th:if="${#lists.isEmpty(myArtworks)}">
+                <td colspan="6" class="text-center text-muted" style="padding: 2rem;">Anda belum mengunggah karya satupun.</td>
+            </tr>
+            
+            <tr th:each="art : ${myArtworks}">
               <td>
                 <div class="flex gap-2 items-center">
                   <div class="art-grad-8" style="width:40px;height:40px;border-radius:var(--radius);flex-shrink:0"></div>
-                  <div><div style="font-weight:600;font-size:0.875rem">Semburat Senja #04</div></div>
+                  <div><div style="font-weight:600;font-size:0.875rem" th:text="${art.title}">Judul</div></div>
                 </div>
               </td>
-              <td class="text-sm text-muted">Acrylic on Canvas</td>
-              <td class="text-sm">100 × 120 cm</td>
-              <td><span style="color:var(--accent);font-weight:700">Rp 12.500.000</span></td>
-              <td><span class="badge badge-available">Available</span></td>
+              <td class="text-sm text-muted" th:text="${art.category}">Kategori</td>
+              <td class="text-sm" th:text="${art.workHours} + ' Jam'">0 Jam</td>
+              <td><span style="color:var(--accent);font-weight:700" th:text="'Rp ' + ${#numbers.formatDecimal(art.finalPrice, 0, 'POINT', 0, 'COMMA')}">Rp 0</span></td>
+              <td>
+                  <span th:class="${art.status == 'AVAILABLE' ? 'badge badge-available' : 'badge badge-sold'}" 
+                        th:text="${art.status}">Status</span>
+              </td>
               <td>
                 <div class="flex gap-1">
-                  <a href="upload.html" class="btn btn-ghost btn-sm" title="Edit">✎</a>
-                  <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="showToast('Karya dihapus','error')" title="Hapus">⊗</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex gap-2 items-center">
-                  <div class="art-grad-4" style="width:40px;height:40px;border-radius:var(--radius);flex-shrink:0"></div>
-                  <div><div style="font-weight:600;font-size:0.875rem">Digital Echoes</div></div>
-                </div>
-              </td>
-              <td class="text-sm text-muted">Digital Print</td>
-              <td class="text-sm">80 × 80 cm</td>
-              <td><span style="color:var(--accent);font-weight:700">Rp 4.200.000</span></td>
-              <td><span class="badge badge-sold">Sold</span></td>
-              <td>
-                <div class="flex gap-1">
-                  <a href="upload.html" class="btn btn-ghost btn-sm" title="Edit">✎</a>
-                  <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="showToast('Karya dihapus','error')" title="Hapus">⊗</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="flex gap-2 items-center">
-                  <div class="art-grad-3" style="width:40px;height:40px;border-radius:var(--radius);flex-shrink:0"></div>
-                  <div><div style="font-weight:600;font-size:0.875rem">Fragmen Ruang</div></div>
-                </div>
-              </td>
-              <td class="text-sm text-muted">Ceramic Sculpture</td>
-              <td class="text-sm">45 × 30 × 30 cm</td>
-              <td><span style="color:var(--accent);font-weight:700">Rp 8.750.000</span></td>
-              <td><span class="badge badge-available">Available</span></td>
-              <td>
-                <div class="flex gap-1">
-                  <a href="upload.html" class="btn btn-ghost btn-sm" title="Edit">✎</a>
-                  <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="showToast('Karya dihapus','error')" title="Hapus">⊗</button>
+                  <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="showToast('Fitur hapus segera hadir','error')" title="Hapus">⊗</button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="flex-between mt-3">
-        <span class="text-sm text-muted">Showing 3 of 24 works</span>
-        <div class="flex gap-1">
-          <button class="btn btn-outline btn-sm">Previous</button>
-          <button class="btn btn-outline btn-sm">Next</button>
-        </div>
-      </div>
     </div>
 
-    <!-- Recent activity -->
-    <div class="panel mt-3">
-      <h4 style="font-size:1rem;margin-bottom:1rem">Aktivitas Terkini</h4>
-      <div style="display:flex;flex-direction:column;gap:0.75rem">
-        <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem;background:var(--surface-2);border-radius:var(--radius)">
-          <div style="width:36px;height:36px;background:var(--accent-light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-          </div>
-          <div style="flex:1">
-            <div style="font-size:0.875rem;font-weight:600">Penjualan baru: Digital Echoes</div>
-            <div style="font-size:0.75rem;color:var(--text-muted)">oleh Julian Voss · 2 jam lalu</div>
-          </div>
-          <span style="color:var(--success);font-weight:700;font-size:0.875rem">+Rp 4.200.000</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem;background:var(--surface-2);border-radius:var(--radius)">
-          <div style="width:36px;height:36px;background:#E8F5E9;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="16" height="16" fill="none" stroke="var(--success)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <div style="flex:1">
-            <div style="font-size:0.875rem;font-weight:600">Pesan baru dari Elena Rodriguez</div>
-            <div style="font-size:0.75rem;color:var(--text-muted)">The commission looks great! · Kemarin</div>
-          </div>
-          <a href="inbox.html" class="btn btn-ghost btn-sm">Balas</a>
-        </div>
-        <div style="display:flex;align-items:center;gap:1rem;padding:0.75rem;background:var(--surface-2);border-radius:var(--radius)">
-          <div style="width:36px;height:36px;background:var(--gold-light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="16" height="16" fill="none" stroke="var(--gold)" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <div style="flex:1">
-            <div style="font-size:0.875rem;font-weight:600">Review baru: ★★★★★</div>
-            <div style="font-size:0.75rem;color:var(--text-muted)">untuk Fragmentasi Ruang Kosong · 3 hari lalu</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/app.js"></script>
+<script th:src="@{/js/app.js}"></script>
 </body>
 </html>

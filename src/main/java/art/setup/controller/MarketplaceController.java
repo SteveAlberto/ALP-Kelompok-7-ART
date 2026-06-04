@@ -36,28 +36,28 @@ public class MarketplaceController {
         return "detail-karya";
     }
 
-    @GetMapping("/upload")
-    public String showUploadForm(Model model, HttpSession session) {
-        if (session.getAttribute("loggedInUser") == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("karyaBaru", new Artwork());
-        return "upload-karya";
-    }
+    // @GetMapping("/upload")
+    // public String showUploadForm(Model model, HttpSession session) {
+    //     if (session.getAttribute("loggedInUser") == null) {
+    //         return "redirect:/login";
+    //     }
+    //     model.addAttribute("karyaBaru", new Artwork());
+    //     return "upload-karya";
+    // }
 
-    @PostMapping("/upload")
-    public String processUpload(@ModelAttribute("karyaBaru") Artwork artwork, HttpSession session) {
-        User currentUser = (User) session.getAttribute("loggedInUser");
+    // @PostMapping("/upload")
+    // public String processUpload(@ModelAttribute("karyaBaru") Artwork artwork, HttpSession session) {
+    //     User currentUser = (User) session.getAttribute("loggedInUser");
 
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
+    //     if (currentUser == null) {
+    //         return "redirect:/login";
+    //     }
 
-        artwork.setArtist(currentUser);
-        artworkService.saveNewArtwork(artwork);
+    //     artwork.setArtist(currentUser);
+    //     artworkService.saveNewArtwork(artwork);
 
-        return "redirect:/katalog";
-    }
+    //     return "redirect:/katalog";
+    // }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model, HttpSession session) {

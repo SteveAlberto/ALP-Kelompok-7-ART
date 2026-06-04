@@ -9,4 +9,5 @@ import java.util.List;
 public interface ArtworkRepository extends JpaRepository<Artwork, Long> {
     List<Artwork> findByCategory(String category);
     List<Artwork> findByArtistId(Long artistId);
+    List<Artwork> findByArtist_Id(Long artistId);
 }

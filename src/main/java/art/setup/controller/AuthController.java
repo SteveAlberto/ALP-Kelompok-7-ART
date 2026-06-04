@@ -16,17 +16,17 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
-        model.addAttribute("userBaru", new User());
+        model.addAttribute("user", new User());
         return "register";
     }
 
     @PostMapping("/register")
-    public String processRegister(@ModelAttribute("userBaru") User user, Model model) {
+    public String processRegister(@ModelAttribute("user") User user, Model model) {
         try {
             userService.registerUser(user);
-            return "redirect:/login"; 
+            return "redirect:/login";
         } catch (IllegalArgumentException e) {
-            model.addAttribute("error", e.getMessage()); 
+            model.addAttribute("error", e.getMessage());
             return "register";
         }
     }

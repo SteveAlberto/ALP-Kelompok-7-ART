@@ -13,12 +13,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     public User registerUser(User newUser) {
+        if (newUser.getPassword().length() < 6) {
+            throw new IllegalArgumentException("Password terlalu pendek! Minimal 6 karakter.");
+        }
+
         Optional<User> existingUser = userRepository.findByUsername(newUser.getUsername());
-        
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("Username sudah terdaftar! Silakan gunakan username lain.");
         }
-        
+
         return userRepository.save(newUser);
     }
 
@@ -40,4 +43,6 @@ public class UserService {
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
+    
 }
