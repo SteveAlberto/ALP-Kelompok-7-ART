@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="'Artopia · ' + ${detailKarya.title}">Artopia · Detail Karya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div id="toast-container" class="toast-container"></div>
+
+<nav class="navbar">
+  <a class="navbar-brand" th:href="@{/}">Artopia<span class="brand-dot"></span></a>
+  <ul class="nav-links">
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/katalog}" class="active">Katalog</a></li>
+    <li><a th:href="@{/dashboard}">Dashboard</a></li>
+    <li><a th:href="@{/inbox}">Inbox</a></li>
+  </ul>
+  <div class="navbar-search">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" placeholder="Cari karya, seniman...">
+  </div>
+  <div class="navbar-actions">
+    <a th:href="@{/cart}" class="btn btn-ghost btn-sm cart-icon-wrap">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span id="cart-badge"></span>
+    </a>
+    
+    <div class="navbar-actions" th:if="${session.loggedInUser == null}">
+        <a th:href="@{/login}" class="btn btn-ghost btn-sm">Masuk</a>
+        <a th:href="@{/register}" class="btn btn-primary btn-sm">Daftar</a>
+    </div>
+    
+    <div class="profile-dropdown" th:if="${session.loggedInUser != null}">
+      <div class="artist-avatar" style="background:var(--accent);color:white;font-weight:700;cursor:pointer;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;" onclick="toggleDropdown()" th:text="${#strings.substring(session.loggedInUser.username,0,1)}">A</div>
+      <div class="profile-dropdown-menu" id="profile-menu">
+        <a th:href="@{/dashboard}"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard</a>
+        <div class="divider"></div>
+        <button onclick="window.location='/logout'"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Keluar</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:1.5rem;padding-bottom:4rem">
+  <a th:href="@{/katalog}" class="btn btn-ghost btn-sm mb-3">← Kembali ke Katalog</a>
+
+  <div class="detail-layout">
+    <div class="detail-gallery fade-in">
+      <div class="detail-main-img">
+        <div class="art-grad-1" id="main-img" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+          <svg width="64" height="64" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+      </div>
+      <div class="detail-thumbs">
+        <div class="detail-thumb active art-grad-1" onclick="selectThumb(this, 'art-grad-1')"></div>
+        <div class="detail-thumb art-grad-3" onclick="selectThumb(this, 'art-grad-3')"></div>
+        <div class="detail-thumb art-grad-5" onclick="selectThumb(this, 'art-grad-5')"></div>
+      </div>
+    </div>
+
+    <div class="detail-info fade-in">
+      <div class="detail-category" th:text="'Fine Art · ' + ${detailKarya.category}">Fine Art · Kategori</div>
+      <h1 class="detail-title" th:text="${detailKarya.title}">Judul Karya</h1>
+
+      <div class="detail-artist-row">
+        <div class="artist-avatar" th:text="${detailKarya.artist != null ? #strings.substring(detailKarya.artist.username,0,1) : 'A'}">A</div>
+        <div>
+          <div style="font-weight:600;font-size:0.88rem" th:text="${detailKarya.artist?.username ?: 'Seniman Anonim'}">Nama Seniman</div>
+          <div style="font-size:0.73rem;color:var(--text-muted)">Seniman Terverifikasi ✓</div>
+        </div>
+        <a th:href="@{/inbox}" class="btn btn-outline btn-sm" style="margin-left:auto">Chat</a>
+      </div>
+
+      <div class="detail-price-box">
+        <div class="detail-price-label">Harga</div>
+        <div class="detail-price" th:text="'Rp ' + ${#numbers.formatDecimal(detailKarya.finalPrice, 0, 'POINT', 0, 'COMMA')}">
+          Rp 0
+        </div>
+      </div>
+
+      <p style="font-size:0.88rem;line-height:1.75;color:var(--text-secondary)" th:text="${detailKarya.storytelling ?: 'Belum ada deskripsi untuk karya ini.'}">
+        Deskripsi karya.
+      </p>
+
+      <div class="detail-specs">
+        <div class="spec-row"><span class="spec-label">Tingkat Kesulitan</span><span class="spec-value" th:text="${detailKarya.difficulty}">Basic</span></div>
+        <div class="spec-row"><span class="spec-label">Jam Kerja</span><span class="spec-value" th:text="${detailKarya.workHours} + ' Jam'">0 Jam</span></div>
+        <div class="spec-row">
+            <span class="spec-label">Status</span>
+            <span class="spec-value" 
+                  th:text="${detailKarya.status}" 
+                  th:style="${detailKarya.status == 'AVAILABLE' ? 'color:var(--success);font-weight:600' : 'color:var(--danger);font-weight:600'}">
+                Tersedia
+            </span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:0.65rem;margin-top:1.4rem">
+        <button class="btn btn-primary btn-full btn-lg" th:onclick="'tambahKeKeranjang(' + ${detailKarya.id} + ')'">
+          <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Tambah ke Keranjang
+        </button>
+        <a th:href="@{/inbox}" class="btn btn-outline btn-full">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Chat dengan Seniman
+        </a>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Escrow Secure</div>
+        <div class="trust-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Insured Shipping</div>
+        <div class="trust-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> COA Included</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

@@ -25,7 +25,7 @@ public class MarketplaceController {
     @GetMapping("/katalog")
     public String showCatalog(Model model) {
         List<Artwork> artworks = artworkService.getAllCatalog();
-        model.addAttribute("daftarKarya", artworks);
+        model.addAttribute("artworks", artworks);
         return "katalog";
     }
 
