@@ -35,20 +35,6 @@ function showToast(pesan, tipe = 'success') {
   setTimeout(() => toast.remove(), 3500);
 }
 
-
-// ─────────────────────────────────────────────
-//  BAGIAN: TOMBOL LIKE / FAVORIT
-//  Fix: pakai event delegation agar bekerja
-//  di kartu yang di-render dinamis maupun statis
-// ─────────────────────────────────────────────
-document.addEventListener('click', function (e) {
-  const likeBtn = e.target.closest('.like-btn');
-  if (!likeBtn) return;
-  e.stopPropagation();
-  likeBtn.classList.toggle('liked');
-});
-
-
 // ─────────────────────────────────────────────
 //  BAGIAN: KERANJANG BELANJA
 // ─────────────────────────────────────────────
