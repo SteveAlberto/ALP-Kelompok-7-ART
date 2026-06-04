@@ -347,36 +347,6 @@ input,textarea,select {
   text-transform: uppercase; 
   letter-spacing: 0.5px;
 }
-
-.like-btn {
-  position: absolute; 
-  top: 0.65rem; 
-  right: 0.65rem;
-  width: 30px; 
-  height: 30px;
-  background: white; 
-  border: none; 
-  border-radius: 50%;
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  cursor: pointer; 
-  transition: transform var(--transition);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  z-index: 2;
-}
-.like-btn:hover { 
-    transform: scale(1.15); 
-}
-.like-btn svg { 
-    pointer-events: none; 
-    transition: fill var(--transition), stroke var(--transition); 
-}
-.like-btn.liked svg { 
-    fill: var(--danger); 
-    stroke: var(--danger); 
-}
-
 .art-info { 
     padding: 0.85rem 0.95rem; 
 }
@@ -415,7 +385,6 @@ input,textarea,select {
 .cat-lukisan   { background: #EEE8DC; color: #7A5C30; }
 .cat-digital   { background: var(--accent-light); color: var(--navy); }
 .cat-patung    { background: #EBE8EF; color: #5A3A72; }
-.cat-fotografi { background: #E4EDE7; color: var(--sage); }
 
 /* ── HERO ────────────────────────────────────── */
 .hero {
@@ -806,7 +775,7 @@ input,textarea,select {
 }
 .dashboard-main { 
     padding: 2rem; 
-    max-width: 880px; 
+    max-width: 1200px; 
 }
 
 /* ── STAT CARDS ──────────────────────────────── */
@@ -1092,9 +1061,10 @@ textarea.form-control { resize: vertical; min-height: 96px; }
     align-items: flex-end; 
     gap: 0.55rem; 
 }
-.message-row.me { flex-direction: row-reverse; }
+.message-row.me { 
+    flex-direction: row-reverse; }
 .message-bubble { 
-    max-width: 66%; 
+    max-width: fit-content; 
     padding: 0.65rem 0.95rem; 
     border-radius: var(--radius-lg); 
     font-size: 0.86rem; 
@@ -1283,7 +1253,7 @@ footer {
 @media (max-width: 1024px) {
   .catalog-layout   { grid-template-columns: 185px 1fr; }
   .detail-layout    { grid-template-columns: 1fr 350px; }
-  .dashboard-layout { grid-template-columns: 170px 1fr; }
+  .dashboard-layout { grid-template-columns: 200px 1fr; }
 }
 @media (max-width: 768px) {
   .catalog-layout, 

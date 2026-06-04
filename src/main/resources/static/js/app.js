@@ -4,15 +4,14 @@ const artworks = [
   { id:2, title:'Fluiditas Dinamis',        artist:'Sari Dewi',      price:12000000, category:'lukisan',   status:'available', grad:'art-grad-2' },
   { id:3, title:'Ethereal Motion',          artist:'Sita Devi',      price:45000000, category:'patung',    status:'available', grad:'art-grad-3' },
   { id:4, title:'Digital Horizon',          artist:'Raka Jurnal',    price:8200000,  category:'digital',   status:'available', grad:'art-grad-4' },
-  { id:5, title:'Brutalist Rhythm',         artist:'Adi Purnomo',    price:15000000, category:'fotografi', status:'available', grad:'art-grad-5' },
-  { id:6, title:'Oceanic Chaos',            artist:'Meila Jaarsma',  price:32000000, category:'lukisan',   status:'sold',      grad:'art-grad-6' },
-  { id:7, title:'Data Flow v2.0',           artist:'Denny R.',       price:5500000,  category:'digital',   status:'available', grad:'art-grad-7' },
-  { id:8, title:'Semburat Senja #04',       artist:'Budi Santoso',   price:12500000, category:'lukisan',   status:'available', grad:'art-grad-8' },
-  { id:9, title:'Struktur Linear v.1',      artist:'Arsitel Senja',  price:6800000,  category:'digital',   status:'available', grad:'art-grad-9' },
+  { id:5, title:'Oceanic Chaos',            artist:'Meila Jaarsma',  price:32000000, category:'lukisan',   status:'sold',      grad:'art-grad-6' },
+  { id:6, title:'Data Flow v2.0',           artist:'Denny R.',       price:5500000,  category:'digital',   status:'available', grad:'art-grad-7' },
+  { id:7, title:'Semburat Senja #04',       artist:'Budi Santoso',   price:12500000, category:'lukisan',   status:'available', grad:'art-grad-8' },
+  { id:8, title:'Struktur Linear v.1',      artist:'Arsitel Senja',  price:6800000,  category:'digital',   status:'available', grad:'art-grad-9' },
 ];
 
-const catLabel = { digital:'Digital', lukisan:'Lukisan', patung:'Patung', fotografi:'Fotografi' };
-const catClass  = { digital:'cat-digital', lukisan:'cat-lukisan', patung:'cat-patung', fotografi:'cat-fotografi' };
+const catLabel = { digital:'Digital', lukisan:'Lukisan', patung:'Patung' };
+const catClass  = { digital:'cat-digital', lukisan:'cat-lukisan', patung:'cat-patung' };
 
 // Keranjang belanja (disimpan di memori sesi)
 let cart = [];
@@ -130,7 +129,6 @@ function buatKartu(a) {
         <div class="art-badge" ${a.status === 'sold' ? 'style="background:var(--danger)"' : ''}>
           ${a.status === 'sold' ? 'Terjual' : 'Tersedia'}
         </div>
-        <button class="like-btn">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
