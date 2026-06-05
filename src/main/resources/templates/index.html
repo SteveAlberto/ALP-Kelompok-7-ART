@@ -122,13 +122,20 @@
       <div class="col-md-4 col-6" th:each="art : ${artworks}">
         <div class="artwork-card card" th:onclick="'window.location=\'/karya/' + ${art.id} + '\''">
           <div class="art-img-wrap">
-            <div style="width: 100%; height: 100%; background-size: cover; background-position: center;"
-                th:styleappend="'background-image: url(' + (${art.imageUrl != null and !art.imageUrl.isEmpty()} ? ${art.imageUrl} : 'https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80') + ');'">
-            </div>
+            
+            <img th:if="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
+                 th:src="@{${art.imageUrl}}" 
+                 alt="Gambar Karya" 
+                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+            
+            <img th:unless="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
+                 src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+                 alt="Gambar Karya" 
+                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
             
             <div class="art-badge" 
-                th:style="${art.status == 'AVAILABLE'} ? 'background:var(--success)' : 'background:var(--text-muted)'"
-                th:text="${art.status == 'AVAILABLE'} ? 'Tersedia' : 'Terjual'">
+                 th:style="${art.status == 'AVAILABLE'} ? 'background:var(--success)' : 'background:var(--text-muted)'"
+                 th:text="${art.status == 'AVAILABLE'} ? 'Tersedia' : 'Terjual'">
               Tersedia
             </div>
             

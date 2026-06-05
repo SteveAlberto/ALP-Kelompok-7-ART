@@ -53,16 +53,33 @@
 
   <div class="detail-layout">
     <div class="detail-gallery fade-in">
-      <div class="detail-main-img">
-        <div class="art-grad-1" id="main-img" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
-          <svg width="64" height="64" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        </div>
+      
+      <div class="detail-main-img" style="position: relative; overflow: hidden; background: var(--surface);">
+          <img th:if="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
+               th:src="@{${detailKarya.imageUrl}}" 
+               alt="Gambar Utama Karya" 
+               style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+          
+          <img th:unless="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
+               src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+               alt="Default Karya" 
+               style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
       </div>
-      <div class="detail-thumbs">
-        <div class="detail-thumb active art-grad-1" onclick="selectThumb(this, 'art-grad-1')"></div>
-        <div class="detail-thumb art-grad-3" onclick="selectThumb(this, 'art-grad-3')"></div>
-        <div class="detail-thumb art-grad-5" onclick="selectThumb(this, 'art-grad-5')"></div>
+
+      <div class="detail-thumbs" style="display: flex; gap: 12px; margin-top: 16px;">
+          <img th:if="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
+               th:src="@{${detailKarya.imageUrl}}" 
+               alt="Thumbnail Karya" 
+               class="detail-thumb active"
+               style="width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent); cursor: pointer; padding: 0; background: none;">
+          
+          <img th:unless="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
+               src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+               alt="Thumbnail Default" 
+               class="detail-thumb active"
+               style="width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent); cursor: pointer; padding: 0; background: none;">
       </div>
+
     </div>
 
     <div class="detail-info fade-in">
