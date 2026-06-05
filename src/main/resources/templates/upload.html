@@ -35,21 +35,16 @@
 <div class="container" style="padding-top:2rem;padding-bottom:4rem">
   <a th:href="@{/dashboard}" class="btn btn-ghost btn-sm mb-3">← Kembali ke Dashboard</a>
 
-  <form th:action="@{/upload}" method="post">
+  <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
       <div class="row g-4">
         <div class="col-lg-7">
           <div class="panel">
             <h3 style="font-size:1.25rem;margin-bottom:0.35rem">Upload Karya</h3>
             <p class="text-muted text-sm mb-4">Document your creative process and set your price.</p>
 
-            <div class="form-group">
-              <div class="form-label">Media Asset (Simulasi, belum fungsi upload asli)</div>
-              <div class="upload-drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-                <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
-                <p><span>Click or drag to upload artwork</span></p>
-                <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem">PNG, JPG, SVG · Max 50MB · Min 300 DPI</p>
-              </div>
-              <input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFile(this)">
+            <div class="form-group mb-4">
+              <label class="form-label">Upload Foto Karya (Maks 5MB) *</label>
+              <input type="file" name="imageFile" class="form-control" accept="image/png, image/jpeg, image/jpg" required>
             </div>
 
             <div class="row g-3">
@@ -63,9 +58,8 @@
                 <div class="form-group">
                   <label class="form-label">Kategori *</label>
                   <select id="art-category" name="category" class="form-control form-select" onchange="updatePreview()" required>
-                    <option value="">Pilih Kategori</option>
+                    <option value="" disabled selected>Pilih Kategori</option>
                     <option value="Lukisan">Lukisan</option>
-                    <option value="Digital">Digital Art</option>
                     <option value="Patung">Patung</option>
                   </select>
                 </div>
@@ -133,7 +127,7 @@
             <div class="artwork-card card" style="pointer-events:none">
               <div class="art-img-wrap">
                 <div class="art-grad-1" style="width:100%;height:100%"></div>
-                <div class="art-badge">Tersedia</div>
+                <div class="art-badge" style="background:var(--success)">Tersedia</div>
               </div>
               <div class="art-info">
                 <div class="art-title" id="preview-title">Judul Karya Anda</div>
@@ -188,7 +182,6 @@
         const catEl = document.getElementById('preview-cat');
         catEl.className = 'art-category'; 
         if(cat === 'Lukisan') catEl.classList.add('cat-lukisan');
-        else if(cat === 'Digital') catEl.classList.add('cat-digital');
         else if(cat === 'Patung') catEl.classList.add('cat-patung');
     }
 
