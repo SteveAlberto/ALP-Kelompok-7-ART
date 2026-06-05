@@ -3,14 +3,11 @@ package art.setup.controller;
 import art.setup.model.Artwork;
 import art.setup.model.User;
 import art.setup.service.ArtworkService;
-import art.setup.service.ArtistHistoryService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam; 
 
 import java.util.List;
 
@@ -19,9 +16,6 @@ public class ProfileController {
 
     @Autowired
     private ArtworkService artworkService;
-
-    @Autowired
-    private ArtistHistoryService artistHistoryService; 
 
     @GetMapping("/dashboard")
     public String showDashboard(HttpSession session, Model model) {
@@ -35,23 +29,7 @@ public class ProfileController {
 
         model.addAttribute("myArtworks", myArtworks);
         model.addAttribute("activeListings", activeListings);
-
+        
         return "dashboard";
-    }
-
-    @PostMapping("/profil/tambah-riwayat")
-    public String addProfileHistory(@RequestParam String year,
-                                    @RequestParam String description,
-                                    HttpSession session) {
-        User currentUser = (User) session.getAttribute("loggedInUser");
-        if (currentUser == null) {
-            return "redirect:/login";
-        }
-
-        if (!year.trim().isEmpty() && !description.trim().isEmpty()) {
-            artistHistoryService.addHistory(currentUser, year, description);
-        }
-
-        return "redirect:/profil";
     }
 }

@@ -124,18 +124,18 @@
           <div class="art-img-wrap">
             
             <img th:if="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
-                 th:src="@{${art.imageUrl}}" 
-                 alt="Gambar Karya" 
-                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                  th:src="@{${art.imageUrl}}" 
+                  alt="Gambar Karya" 
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
             
             <img th:unless="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
-                 src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
-                 alt="Gambar Karya" 
-                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                  src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+                  alt="Gambar Karya" 
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
             
             <div class="art-badge" 
-                 th:style="${art.status == 'AVAILABLE'} ? 'background:var(--success)' : 'background:var(--text-muted)'"
-                 th:text="${art.status == 'AVAILABLE'} ? 'Tersedia' : 'Terjual'">
+                  th:style="${art.status == 'AVAILABLE'} ? 'background:var(--success)' : 'background:var(--text-muted)'"
+                  th:text="${art.status == 'AVAILABLE'} ? 'Tersedia' : 'Terjual'">
               Tersedia
             </div>
             

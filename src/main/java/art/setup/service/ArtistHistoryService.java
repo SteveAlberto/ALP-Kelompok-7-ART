@@ -26,4 +26,8 @@ public class ArtistHistoryService {
     public List<ArtistHistory> getHistoryByArtist(Long artistId) {
         return artistHistoryRepository.findByArtistIdOrderByYearDesc(artistId);
     }
+
+    public List<ArtistHistory> getHistoryByUserId(Long userId) {
+        return artistHistoryRepository.findByArtistId(userId);
+    }
 }

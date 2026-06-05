@@ -56,28 +56,28 @@
       
       <div class="detail-main-img" style="position: relative; overflow: hidden; background: var(--surface);">
           <img th:if="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
-               th:src="@{${detailKarya.imageUrl}}" 
-               alt="Gambar Utama Karya" 
-               style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+                th:src="@{${detailKarya.imageUrl}}" 
+                alt="Gambar Utama Karya" 
+                style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
           
           <img th:unless="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
-               src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
-               alt="Default Karya" 
-               style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+                src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+                alt="Default Karya" 
+                style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
       </div>
 
       <div class="detail-thumbs" style="display: flex; gap: 12px; margin-top: 16px;">
           <img th:if="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
-               th:src="@{${detailKarya.imageUrl}}" 
-               alt="Thumbnail Karya" 
-               class="detail-thumb active"
-               style="width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent); cursor: pointer; padding: 0; background: none;">
+                th:src="@{${detailKarya.imageUrl}}" 
+                alt="Thumbnail Karya" 
+                class="detail-thumb active"
+                style="width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent); cursor: pointer; padding: 0; background: none;">
           
           <img th:unless="${detailKarya.imageUrl != null and !detailKarya.imageUrl.isEmpty()}" 
-               src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
-               alt="Thumbnail Default" 
-               class="detail-thumb active"
-               style="width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent); cursor: pointer; padding: 0; background: none;">
+                src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+                alt="Thumbnail Default" 
+                class="detail-thumb active"
+                style="width: 75px; height: 75px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent); cursor: pointer; padding: 0; background: none;">
       </div>
 
     </div>

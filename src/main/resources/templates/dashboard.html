@@ -96,12 +96,12 @@
                   
                   <div style="width:40px;height:40px;border-radius:var(--radius);flex-shrink:0;overflow:hidden;">
                       <img th:if="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
-                           th:src="@{${art.imageUrl}}" 
-                           style="width:100%;height:100%;object-fit:cover;" alt="Thumbnail">
+                            th:src="@{${art.imageUrl}}" 
+                            style="width:100%;height:100%;object-fit:cover;" alt="Thumbnail">
                       <img th:unless="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
-                           src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
-                           style="width:100%;height:100%;object-fit:cover;" alt="Thumbnail">
-                  </div>
+                            src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+                            style="width:100%;height:100%;object-fit:cover;" alt="Thumbnail">
+                    </div>
                   
                   <div><div style="font-weight:600;font-size:0.875rem" th:text="${art.title}">Judul</div></div>
                 </div>
@@ -114,8 +114,15 @@
                         th:text="${art.status}">Status</span>
               </td>
               <td>
-                <div class="flex gap-1">
+                <div class="flex gap-2">
                   
+                  <a th:href="@{/edit/{id}(id=${art.id})}" class="btn btn-ghost btn-sm" style="color: var(--accent); padding: 0.2rem 0.5rem;" title="Edit Karya">
+                      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                      </svg>
+                  </a>
+
                   <form th:action="@{/hapus/{id}(id=${art.id})}" method="post" style="margin: 0;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus karya ini secara permanen?');">
                       <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--danger); padding: 0.2rem 0.5rem;" title="Hapus Karya">
                           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
