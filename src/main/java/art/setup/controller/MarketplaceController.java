@@ -45,16 +45,16 @@ public class MarketplaceController {
     @PostMapping("/edit/{id}")
     public String processEdit(@PathVariable Long id, @ModelAttribute("karyaEdit") Artwork artwork) {
         artworkService.updateArtwork(id, artwork);
-        return "redirect:/katalog";
+        return "redirect:/dashboard";
     }
 
-    @GetMapping("/hapus/{id}")
+    @PostMapping("/hapus/{id}")
     public String deleteArtwork(@PathVariable Long id, HttpSession session) {
         if (session.getAttribute("loggedInUser") == null) {
             return "redirect:/login";
         }
         
         artworkService.deleteArtwork(id);
-        return "redirect:/katalog";
+        return "redirect:/dashboard";
     }
 }

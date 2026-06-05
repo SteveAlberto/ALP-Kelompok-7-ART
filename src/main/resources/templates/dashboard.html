@@ -93,7 +93,16 @@
             <tr th:each="art : ${myArtworks}">
               <td>
                 <div class="flex gap-2 items-center">
-                  <div class="art-grad-8" style="width:40px;height:40px;border-radius:var(--radius);flex-shrink:0"></div>
+                  
+                  <div style="width:40px;height:40px;border-radius:var(--radius);flex-shrink:0;overflow:hidden;">
+                      <img th:if="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
+                           th:src="@{${art.imageUrl}}" 
+                           style="width:100%;height:100%;object-fit:cover;" alt="Thumbnail">
+                      <img th:unless="${art.imageUrl != null and !art.imageUrl.isEmpty()}" 
+                           src="https://images.unsplash.com/photo-1561214115-f1f115386381?w=600&q=80" 
+                           style="width:100%;height:100%;object-fit:cover;" alt="Thumbnail">
+                  </div>
+                  
                   <div><div style="font-weight:600;font-size:0.875rem" th:text="${art.title}">Judul</div></div>
                 </div>
               </td>
@@ -106,7 +115,18 @@
               </td>
               <td>
                 <div class="flex gap-1">
-                  <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="showToast('Fitur hapus segera hadir','error')" title="Hapus">⊗</button>
+                  
+                  <form th:action="@{/hapus/{id}(id=${art.id})}" method="post" style="margin: 0;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus karya ini secara permanen?');">
+                      <button type="submit" class="btn btn-ghost btn-sm" style="color: var(--danger); padding: 0.2rem 0.5rem;" title="Hapus Karya">
+                          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                              <path d="M3 6h18"></path>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                              <line x1="10" y1="11" x2="10" y2="17"></line>
+                              <line x1="14" y1="11" x2="14" y2="17"></line>
+                          </svg>
+                      </button>
+                  </form>
+
                 </div>
               </td>
             </tr>
